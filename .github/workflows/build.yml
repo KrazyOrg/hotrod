@@ -88,7 +88,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: signadot/hotrod-customer:${{ github.sha }}
+        tags: arjuniyer/hotrod-customer:${{ github.sha }}
 
     - name: Build driver image
       if: ${{ needs.changes.outputs.driver == 'true' }}
@@ -96,7 +96,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: signadot/hotrod-driver:${{ github.sha }}
+        tags: arjuniyer/hotrod-driver:${{ github.sha }}
 
     - name: Build frontend image
       if: ${{ needs.changes.outputs.frontend == 'true' }}
@@ -104,7 +104,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: signadot/hotrod-frontend:${{ github.sha }}
+        tags: arjuniyer/hotrod-frontend:${{ github.sha }}
       
     - name: Build route image
       if: ${{ needs.changes.outputs.route == 'true' }}
@@ -112,7 +112,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: signadot/hotrod-route:${{ github.sha }}
+        tags: arjuniyer/hotrod-route:${{ github.sha }}
 
   update_signadot:
     if: ${{ github.event_name == 'pull_request' }}
@@ -125,22 +125,22 @@ jobs:
          imageReplacements=()
          if [[ ${{ needs.changes.outputs.customer }} == 'true' ]]
          then
-           imageReplacements+=('{"name": "signadot/hotrod-customer", "newTag": "${{ github.sha }}"}')
+           imageReplacements+=('{"name": "arjuniyer/hotrod-customer", "newTag": "${{ github.sha }}"}')
          fi
          
          if [[ ${{ needs.changes.outputs.driver }} == 'true' ]]
          then
-           imageReplacements+=('{"name": "signadot/hotrod-driver", "newTag": "${{ github.sha }}"}')
+           imageReplacements+=('{"name": "arjuniyer/hotrod-driver", "newTag": "${{ github.sha }}"}')
          fi
          
          if [[ ${{ needs.changes.outputs.frontend }} == 'true' ]]
          then
-           imageReplacements+=('{"name": "signadot/hotrod-frontend", "newTag": "${{ github.sha }}"}')
+           imageReplacements+=('{"name": "arjuniyer/hotrod-frontend", "newTag": "${{ github.sha }}"}')
          fi
          
          if [[ ${{ needs.changes.outputs.route }} == 'true' ]]
          then
-           imageReplacements+=('{"name": "signadot/hotrod-route", "newTag": "${{ github.sha }}"}')
+           imageReplacements+=('{"name": "arjuniyer/hotrod-route", "newTag": "${{ github.sha }}"}')
          fi
          
          printf -v joined '%s,' "${imageReplacements[@]}"
@@ -148,7 +148,7 @@ jobs:
          
          payload=$(cat <<EOF
          {
-           "cluster": "demo",
+           "cluster": "arjun-docker-desktop",
            "namespace": "hotrod",
            "defaultService": "frontend",
            "defaultServicePort": 8080,
@@ -162,7 +162,7 @@ jobs:
          RESULT=$(curl -H 'Content-Type: application/json' \
               -H 'Authorization: ApiKey ${{ secrets.SIGNADOT_API_KEY }}' \
               -d "${payload}" \
-         https://api.signadot.com/api/v1/repos/signadot/hotrod/pulls/${{ github.event.number }}/workspaces)
+         https://api.signadot.com/api/v1/repos/krazyorg/hotrod/pulls/${{ github.event.number }}/workspaces)
          echo $RESULT
          ERROR=$(jq -r '.error' <<< $RESULT)
          if [ $ERROR != "null" ]; then
