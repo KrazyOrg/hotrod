@@ -28,7 +28,7 @@ spec:
               value: jaeger
             - name: JAEGER_AGENT_PORT
               value: "6831"
-          image: signadot/hotrod-customer:latest
+          image: arjuniyer/hotrod-customer:latest
           imagePullPolicy: Always
           name: hotrod
           ports:
@@ -81,7 +81,7 @@ spec:
               value: jaeger
             - name: JAEGER_AGENT_PORT
               value: "6831"
-          image: signadot/hotrod-driver:latest
+          image: arjuniyer/hotrod-driver:latest
           imagePullPolicy: Always
           name: hotrod
           ports:
@@ -135,7 +135,7 @@ spec:
               value: jaeger
             - name: JAEGER_AGENT_PORT
               value: "6831"
-          image: signadot/hotrod-frontend:latest
+          image: arjuniyer/hotrod-frontend:latest
           imagePullPolicy: Always
           name: hotrod
           ports:
@@ -188,7 +188,7 @@ spec:
               value: jaeger
             - name: JAEGER_AGENT_PORT
               value: "6831"
-          image: signadot/hotrod-route:latest
+          image: arjuniyer/hotrod-route:latest
           imagePullPolicy: Always
           name: hotrod
           ports:
